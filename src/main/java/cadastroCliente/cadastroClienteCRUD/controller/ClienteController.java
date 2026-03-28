@@ -20,6 +20,11 @@ public class ClienteController {
         return clienteService.mostrarCliente();
     }
 
+    @GetMapping("/{id}")
+    public ClienteResponseDTO encontrarUsuario(@PathVariable Long id){
+        return clienteService.buscarCliente(id);
+    }
+
     @PostMapping
     public ClienteResponseDTO criar(@RequestBody ClienteRequestDTO resquisicaoCliente){
         return clienteService.cadastrarCliente(resquisicaoCliente);
