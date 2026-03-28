@@ -40,7 +40,7 @@ public class ClienteController {
             @RequestBody ClienteRequestDTO requisicaoCliente){
         var cliente = clienteService.atualizarCliente(id, requisicaoCliente);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
+        return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
 
     @DeleteMapping("/{id}")
