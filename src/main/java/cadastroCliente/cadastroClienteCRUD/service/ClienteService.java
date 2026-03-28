@@ -84,4 +84,15 @@ public class ClienteService {
                 ));
     }
 
+    public void removerCliente(long id){
+        clienteRepository.findById(id)
+                .map(cliente -> {
+                    clienteRepository.delete(cliente);
+                    return cliente;
+                })
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Cliente não encontrado"
+                ));
+    }
+
 }

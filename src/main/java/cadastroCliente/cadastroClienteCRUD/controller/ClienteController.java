@@ -4,7 +4,9 @@ import cadastroCliente.cadastroClienteCRUD.dto.ClienteRequestDTO;
 import cadastroCliente.cadastroClienteCRUD.dto.ClienteResponseDTO;
 import cadastroCliente.cadastroClienteCRUD.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ClienteResponseDTO encontrarUsuario(@PathVariable Long id){
+    public ClienteResponseDTO encontrarUsuario(@PathVariable long id){
         return clienteService.buscarCliente(id);
     }
 
@@ -36,4 +38,11 @@ public class ClienteController {
             @RequestBody ClienteRequestDTO requisicaoCliente){
         return clienteService.atualizarCliente(id, requisicaoCliente);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarCliente(@PathVariable long id){
+        clienteService.removerCliente(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
