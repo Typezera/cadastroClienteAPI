@@ -4,9 +4,9 @@ import cadastroCliente.cadastroClienteCRUD.dto.ClienteRequestDTO;
 import cadastroCliente.cadastroClienteCRUD.dto.ClienteResponseDTO;
 import cadastroCliente.cadastroClienteCRUD.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -28,15 +28,19 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ClienteResponseDTO criar(@RequestBody ClienteRequestDTO resquisicaoCliente){
-        return clienteService.cadastrarCliente(resquisicaoCliente);
+    public ResponseEntity<ClienteResponseDTO> criar(@RequestBody ClienteRequestDTO resquisicaoCliente){
+        var cliente = clienteService.cadastrarCliente(resquisicaoCliente);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
     }
 
     @PutMapping("/{id}")
-    public ClienteResponseDTO atualizarCliente(
+    public ResponseEntity<ClienteResponseDTO> atualizarCliente(
             @PathVariable Long id,
             @RequestBody ClienteRequestDTO requisicaoCliente){
-        return clienteService.atualizarCliente(id, requisicaoCliente);
+        var cliente = clienteService.atualizarCliente(id, requisicaoCliente);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
     }
 
     @DeleteMapping("/{id}")
