@@ -6,6 +6,8 @@ import cadastroCliente.cadastroClienteCRUD.model.ClienteModel;
 import cadastroCliente.cadastroClienteCRUD.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClienteService {
     private ClienteRepository clienteRepository;
@@ -30,5 +32,17 @@ public class ClienteService {
                 salvo.getEmail()
         );
     }
+
+    public List<ClienteResponseDTO> mostrarCliente(){
+
+        var clientes = clienteRepository.findAll();
+
+        return clientes.stream().map(cliente -> new ClienteResponseDTO(
+                cliente.getId(),
+                cliente.getNome(),
+                cliente.getEmail()
+        ))
+                .toList();
+    };
 
 }
