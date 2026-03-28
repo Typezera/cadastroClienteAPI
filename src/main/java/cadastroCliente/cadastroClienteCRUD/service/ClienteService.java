@@ -4,6 +4,7 @@ import cadastroCliente.cadastroClienteCRUD.dto.ClienteRequestDTO;
 import cadastroCliente.cadastroClienteCRUD.dto.ClienteResponseDTO;
 import cadastroCliente.cadastroClienteCRUD.model.ClienteModel;
 import cadastroCliente.cadastroClienteCRUD.repository.ClienteRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,5 +45,24 @@ public class ClienteService {
         ))
                 .toList();
     };
+
+    public ClienteResponseDTO atualizarCliente(long id, ClienteRequestDTO updateCliente){
+        return clienteRepository.findById(id)
+                .map(cliente -> {
+                    cliente.setNome(updateCliente.nome());
+                    cliente.setEmail(updateCliente.email());
+                    cliente.setSenha(updateCliente.senha());
+
+                    var atualizado = clienteRepository.save(cliente);
+
+                    return new ClienteResponseDTO(
+                            atualizado.getId(),
+                            atualizado.getNome(),
+                            atualizado.getEmail()
+                    );
+                })
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+
+    }
 
 }

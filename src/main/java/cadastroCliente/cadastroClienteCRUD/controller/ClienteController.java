@@ -21,7 +21,14 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ClienteResponseDTO criar(@RequestBody ClienteRequestDTO dto){
-        return clienteService.cadastrarCliente(dto);
+    public ClienteResponseDTO criar(@RequestBody ClienteRequestDTO resquisicaoCliente){
+        return clienteService.cadastrarCliente(resquisicaoCliente);
+    }
+
+    @PutMapping("/{id}")
+    public ClienteResponseDTO atualizarCliente(
+            @PathVariable Long id,
+            @RequestBody ClienteRequestDTO requisicaoCliente){
+        return clienteService.atualizarCliente(id, requisicaoCliente);
     }
 }
